@@ -8,6 +8,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+
 class DetectBlue:
     """
     Detects blue objects from an image.
@@ -52,9 +53,6 @@ class DetectBlue:
 
         # Threshold the HSV image to get only blue colors
         mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
-        # Bitwise-AND mask and original image
-        res = cv2.bitwise_and(img, img, mask=mask)
 
         # ============
         # ↑ BOOTCAMPERS MODIFY ABOVE THIS COMMENT ↑
@@ -103,6 +101,7 @@ class DetectRed:
         output_path: Path to output the resulting image with annotated detections.
         return_mask: Option to return the mask (black and white version of colour detection).
         """
+
         img = cv2.imread(image)
 
         # ============
@@ -113,20 +112,17 @@ class DetectRed:
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         # Set upper and lower bounds for colour detection, this is in HSV
-        lower_red1 = np.array([0, 120, 70])
-        upper_red1 = np.array([10, 255, 255])
-        lower_red2 = np.array([170, 120, 70])
-        upper_red2 = np.array([180, 255, 255])
+        lower_red_1 = np.array([0, 120, 70])
+        upper_red_1 = np.array([10, 255, 255])
+        lower_red_2 = np.array([170, 120, 70])
+        upper_red_2 = np.array([180, 255, 255])
 
         # Apply the thresholds for the colour detection
-        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
-        mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+        mask_1 = cv2.inRange(hsv, lower_red_1, upper_red_1)
+        mask_2 = cv2.inRange(hsv, lower_red_2, upper_red_2)
 
         # Combine the two masks
-        mask = mask1 | mask2
-
-        # Shows the detected colour from the mask
-        res = cv2.bitwise_and(img, img, mask=mask)
+        mask = mask_1 | mask_2
 
         # Annotate the colour detections
         # replace the '_' parameter with the appropiate variable
